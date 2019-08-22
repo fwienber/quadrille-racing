@@ -50,31 +50,47 @@ class Main {
         controllers.push(new KeyboardInput(i));
       }
       this.controllers = controllers;
-      this.id = window.setInterval(this.gameLoop, this.gameSettings.timeout);
+      window.requestAnimationFrame(this.gameLoop);
     });
   }
 
-  gameLoop() {
-    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
-      let racer = this.racers[i];
-      if (racer.finished) {
-        continue;
-      }
-
-      let direction = this.controllers[i].direction();
-      if (!direction) {
-        window.clearInterval(this.id);
-        return;
-      }
-      let lastLine = racer.move(direction);
-      if (this.course.intersect(lastLine)) {
-        racer.crash();
-      }
-      if (this.course.intersectsFinishLine(lastLine)) {
-        racer.finish();
-      }
-      this.courseRenderer.render();
+  gameLoop(timestamp) {
+    if (!this.start) {
+      this.start = timestamp;
     }
+    let timeDelta = timestamp - this.start;
+    if (timeDelta < this.gameSettings.timeout) {
+      let context = this.courseRenderer.context;
+      context.fillStyle = "blue";
+      context.beginPath();
+      context.moveTo(500,400);
+      context.arc(500, 400, 50, 0, 2 * Math.PI * (timeDelta / 500));
+      context.lineTo(500,400);
+      context.fill();
+    } else {
+      this.start = timestamp;
+      for (let i = 0; i < this.gameSettings.numRacers; ++i) {
+        let racer = this.racers[i];
+        if (racer.finished) {
+          continue;
+        }
+
+        let direction = this.controllers[i].direction();
+        if (!direction) {
+          window.clearInterval(this.id);
+          return;
+        }
+        let lastLine = racer.move(direction);
+        if (this.course.intersect(lastLine)) {
+          racer.crash();
+        }
+        if (this.course.intersectsFinishLine(lastLine)) {
+          racer.finish();
+        }
+        this.courseRenderer.render();
+      }
+    }
+    window.requestAnimationFrame(this.gameLoop);
   }
 
 }
