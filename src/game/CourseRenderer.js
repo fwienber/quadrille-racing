@@ -12,9 +12,10 @@ export class CourseRenderer {
   render() {
     this.context.lineWidth = 1;
     this.context.lineCap = "butt";
+    this.context.fillStyle = "white";
 
     // clear
-    this.context.fillRect(0, 0, this.canvas.widows, this.canvas.height);
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // render course
     this.context.strokeStyle = "black";
