@@ -1,4 +1,3 @@
-import {Position} from "./Position.js";
 import {Line} from "./Line.js"
 
 export class Polyline {

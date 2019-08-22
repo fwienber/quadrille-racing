@@ -1,5 +1,6 @@
 import {Vector} from "../geometry/Vector.js";
-import {Momentum} from "../geometry/Momentum.js";
+import {Line} from "../geometry/Line.js";
+import {Direction} from "../geometry/Momentum.js";
 
 const NEIGHBORS = [];
 for (let y = -1; y <=1; ++y) {
@@ -14,6 +15,7 @@ export class Racer {
     this.color = color;
     this.track = [startPosition]; // of positions
     this.momentum = momentum;
+    this.state = "racing";
   }
 
   get position() {
@@ -31,9 +33,28 @@ export class Racer {
 
   move(acceleration = NULL_VECTOR) {
     this.momentum = this.momentum.add(acceleration);
-    let nextPosition = this.position.add(this.momentum);
+    let currentPosition = this.position;
+    let nextPosition = currentPosition.add(this.momentum);
     this.track.push(nextPosition);
-    return nextPosition;
+    return new Line(currentPosition, nextPosition);
+  }
+
+  crash() {
+    this.momentum = Direction.ZERO;
+    this.state = "crashed";
+  }
+
+  get crashed() {
+    return this.state === "crashed";
+  } 
+
+  finish() {
+    this.momentum = Direction.ZERO;
+    this.state = "finished";
+  }
+
+  get finished() {
+    return this.state === "finished";
   }
 
   toString() {

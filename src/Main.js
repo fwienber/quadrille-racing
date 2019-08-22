@@ -5,6 +5,7 @@ import {Course} from "./game/Course.js";
 import {Line} from "./geometry/Line.js";
 import {waitForGamepads} from "./input/GamepadInput.js";
 import {KeyboardInput} from "./input/KeyboardInput.js";
+import {Polyline} from "./geometry/Polyline.js";
 
 const NUM_RACERS = 2;
 const NUM_GAMEPADS = 0;
@@ -19,8 +20,8 @@ class Main {
     let finishOuter = new Vector(12,14);
     let finishInner = new Vector(8,14);
     let finishLine = new Line(finishOuter, finishInner);
-    let outerBorder = [startOuter, new Vector(7,1), new Vector(10,3), new Vector(12,8), finishOuter];
-    let innerBorder = [startInner, new Vector(6,5), new Vector(7,7), new Vector(8,10), finishInner];
+    let outerBorder = new Polyline(startOuter, new Vector(7,1), new Vector(10,3), new Vector(12,8), finishOuter);
+    let innerBorder = new Polyline(startInner, new Vector(6,5), new Vector(7,7), new Vector(8,10), finishInner);
 
     let racers = [];
     for (let i = 0; i < NUM_RACERS; ++i) {
@@ -44,16 +45,27 @@ class Main {
       }
       let id = window.setInterval(() => {
         for (let i = 0; i < NUM_RACERS; ++i) {
+          let racer = racers[i];
+          if (racer.finished) {
+            continue;
+          }
+
           let direction = controllers[i].direction();
           if (!direction) {
             window.clearInterval(id);
           }
           console.log(i + ": " + direction);
-          racers[i].move(direction);
-          console.log(i + "=> " + racers[i].position);
+          let lastLine = racer.move(direction);
+          if (course.intersect(lastLine)) {
+            racer.crash();
+          }
+          if (course.intersectsFinishLine(lastLine)) {
+            racer.finish();
+          }
+          console.log(i + "=> " + racer.position);
           courseRenderer.render();
         }
-      }, 3000);
+      }, 1000);
     });
   }
 

@@ -8,4 +8,11 @@ export class Course {
     this.finishLine = finishLine || startLine;
   }
 
+  intersect(line) {
+    return this.innerBorder.intersect(line) || this.outerBorder.intersect(line);
+  }
+
+  intersectsFinishLine(line) {
+    return this.finishLine.intersect(line);
+  }
 }

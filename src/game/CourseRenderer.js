@@ -56,20 +56,25 @@ export class CourseRenderer {
     this.context.strokeStyle = "black";
     this.context.setLineDash([]);
     this.context.beginPath();
-    this.renderPolyLine(this.course.outerBorder);
-    this.renderPolyLine(this.course.innerBorder);
+    this.renderPolyline(this.course.outerBorder.positions);
+    this.renderPolyline(this.course.innerBorder.positions);
     this.context.stroke();
 
     // render racers
     for (let racer of this.racers) {
       this.context.beginPath();
       this.context.strokeStyle = racer.color;
-      this.renderPolyLine(racer.track);
+      this.renderPolyline(racer.track);
       this.context.stroke();
 
       this.context.fillStyle = racer.color;
       for (let position of racer.track) {
         this.renderFilledCircle(position, SCALE / 6);
+      }
+      if (racer.crashed) {
+        this.context.fillStyle = "grey";
+      } else if (racer.finished) {
+        this.context.fillStyle = "white";
       }
       this.renderFilledCircle(racer.position, SCALE / 4);
 
@@ -83,6 +88,7 @@ export class CourseRenderer {
     this.context.beginPath();
     this.context.arc(SCALE * position.x, SCALE * position.y, radius, 0, 2 * Math.PI);
     this.context.fill();
+    this.context.stroke();
   }
 
   renderLine(line) {
@@ -90,7 +96,7 @@ export class CourseRenderer {
     this.context.lineTo(SCALE * line.end.x, SCALE * line.end.y);
   }
 
-  renderPolyLine(polyLine) {
+  renderPolyline(polyLine) {
     let firstPoint = polyLine[0];
     this.context.moveTo(SCALE * firstPoint.x, SCALE * firstPoint.y);
     for (let i = 1; i < polyLine.length; ++i) {
