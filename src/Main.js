@@ -7,6 +7,7 @@ import {Line} from "./geometry/Line.js";
 import {waitForGamepads} from "./input/GamepadInput.js";
 import {KeyboardInput} from "./input/KeyboardInput.js";
 import {Polyline} from "./geometry/Polyline.js";
+import {readCourseFromSvg} from "./reader/SvgCourseReader.js";
 
 //const NUM_RACERS = 2;
 //const NUM_GAMEPADS = 1;
@@ -16,10 +17,16 @@ class Main {
 
   constructor() {
     this.gameLoop = this.gameLoop.bind(this);
+    this.startGame = this.startGame.bind(this);
     this.gameSettings = GAME_SETTINGS;
   }
 
   newGame() {
+    readCourseFromSvg("resources/course1.svg", this.startGame);
+    // this.startGame(Main.createSimpleCourse());
+  }
+
+  static createSimpleCourse() {
     let startOuter = new Vector(1, 1);
     let startInner = new Vector(1, 5);
     let startLine = new Line(startOuter, startInner);
@@ -28,7 +35,11 @@ class Main {
     let finishLine = new Line(finishOuter, finishInner);
     let outerBorder = new Polyline(startOuter, new Vector(7,1), new Vector(10,3), new Vector(12,8), finishOuter);
     let innerBorder = new Polyline(startInner, new Vector(6,5), new Vector(7,7), new Vector(8,10), finishInner);
+    return new Course(startLine, innerBorder, outerBorder, finishLine);
+  }
 
+  startGame(course) {
+    this.course = course;
     this.racers = [];
     for (let i = 0; i < this.gameSettings.numRacers; ++i) {
       let racer = new Racer(this.gameSettings.racerColors[i], new Vector(1, 2 + i));
@@ -41,7 +52,6 @@ class Main {
     canvas.height = 601;
     document.body.appendChild(canvas);
 
-    this.course = new Course(startLine, innerBorder, outerBorder, finishLine);
     this.courseRenderer = new CourseRenderer(canvas, this.course, this.racers);
     this.courseRenderer.render();
 
