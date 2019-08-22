@@ -13,7 +13,7 @@ const KEY_MAPPINGS = [
   },
   {
     "t": Direction.NW,
-    "y": Direction.N,
+    "z": Direction.N,
     "u": Direction.NE,
     "g": Direction.W,
     "j": Direction.E,
