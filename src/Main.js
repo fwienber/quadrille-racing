@@ -1,3 +1,4 @@
+import {GAME_SETTINGS} from "./GameSettings.js";
 import {Racer} from "./game/Racer.js";
 import {Vector} from "./geometry/Vector.js";
 import {CourseRenderer} from "./game/CourseRenderer.js";
@@ -7,14 +8,15 @@ import {waitForGamepads} from "./input/GamepadInput.js";
 import {KeyboardInput} from "./input/KeyboardInput.js";
 import {Polyline} from "./geometry/Polyline.js";
 
-const NUM_RACERS = 2;
-const NUM_GAMEPADS = 1;
-const RACER_COLORS = ["red", "blue", "green"];
+//const NUM_RACERS = 2;
+//const NUM_GAMEPADS = 1;
+//const RACER_COLORS = ["red", "blue", "green"];
 
 class Main {
 
   constructor() {
     this.gameLoop = this.gameLoop.bind(this);
+    this.gameSettings = GAME_SETTINGS;
   }
 
   newGame() {
@@ -28,8 +30,8 @@ class Main {
     let innerBorder = new Polyline(startInner, new Vector(6,5), new Vector(7,7), new Vector(8,10), finishInner);
 
     this.racers = [];
-    for (let i = 0; i < NUM_RACERS; ++i) {
-      let racer = new Racer(RACER_COLORS[i], new Vector(1, 2 + i));
+    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
+      let racer = new Racer(this.gameSettings.racerColors[i], new Vector(1, 2 + i));
       racer.move(new Vector(1,0));
       this.racers.push(racer);
     }
@@ -43,17 +45,17 @@ class Main {
     this.courseRenderer = new CourseRenderer(canvas, this.course, this.racers);
     this.courseRenderer.render();
 
-    waitForGamepads(NUM_GAMEPADS, controllers => {
-      for (let i = 0; i < NUM_RACERS - NUM_GAMEPADS; ++i) {
+    waitForGamepads(this.gameSettings.numGamePads, controllers => {
+      for (let i = 0; i < this.gameSettings.numRacers - this.gameSettings.numGamePads; ++i) {
         controllers.push(new KeyboardInput(i));
       }
       this.controllers = controllers;
-      this.id = window.setInterval(this.gameLoop, 1000);
+      this.id = window.setInterval(this.gameLoop, this.gameSettings.timeout);
     });
   }
 
   gameLoop() {
-    for (let i = 0; i < NUM_RACERS; ++i) {
+    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
       let racer = this.racers[i];
       if (racer.finished) {
         continue;
