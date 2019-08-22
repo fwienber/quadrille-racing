@@ -7,6 +7,14 @@ export class Line {
     this.end = end;
   }
 
+  toString() {
+    return "[" + this.start + " - " + this.end + "]";
+  }
+
+  invert() {
+    return new Line(this.end, this.start);
+  }
+
   intersect(line) { // returns position
     // based on https://de.wikipedia.org/wiki/Schnittpunkt
 
