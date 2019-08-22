@@ -7,27 +7,30 @@ const CROSS_RIGHT = 15;
 const BURGER = 9;
 const AXES_LIMIT = 0.5;
 
-export class GamepadInput {
-  constructor(number, callback) {
-    this.gamepads = [];
-    window.addEventListener("gamepadconnected", e => {
-      if (e.gamepad.mapping === "standard") {
-        this.gamepads.push(e.gamepad.index);
-        if (this.gamepads.length === number) {
-          callback(this);
-        }
-      }
-    });
-    window.addEventListener("gamepaddisconnected", e => {
-      let removeIndex = this.gamepads.findIndex(index => index === e.gamepad.index);
-      if (removeIndex >= 0) {
-        this.gamepads.slice(removeIndex, 1);
-      }
-    });
+export function waitForGamepads(number, callback) {
+  let gamepads = [];
+
+  if (!number) {
+    callback(gamepads);
   }
 
-  direction(index) {
-    let gamepad = window.navigator.getGamepads()[this.gamepads[index]];
+  window.addEventListener("gamepadconnected", e => {
+    if (e.gamepad.mapping === "standard") {
+      gamepads.push(new GamepadInput(e.gamepad.index));
+      if (gamepads.length === number) {
+        callback(gamepads);
+      }
+    }
+  });
+}
+
+class GamepadInput {
+  constructor(index) {
+    this.index = index;
+  }
+
+  direction() {
+    let gamepad = window.navigator.getGamepads()[this.index];
     if (gamepad) {
       let buttons = gamepad.buttons;
       if (buttons[BURGER].pressed) {
@@ -35,10 +38,10 @@ export class GamepadInput {
       }
       let leftRight = gamepad.axes[0];
       let upDown = gamepad.axes[1];
-      let deltaX =  buttons[CROSS_LEFT].pressed || leftRight < -AXES_LIMIT ? -1
+      let deltaX = buttons[CROSS_LEFT].pressed || leftRight < -AXES_LIMIT ? -1
               : buttons[CROSS_RIGHT].pressed || leftRight > AXES_LIMIT ? 1
                       : 0;
-      let deltaY =  buttons[CROSS_UP].pressed || upDown < -AXES_LIMIT ? -1
+      let deltaY = buttons[CROSS_UP].pressed || upDown < -AXES_LIMIT ? -1
               : buttons[CROSS_DOWN].pressed || upDown > AXES_LIMIT ? 1
                       : 0;
       return new Vector(deltaX, deltaY);

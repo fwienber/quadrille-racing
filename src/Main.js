@@ -3,9 +3,11 @@ import {Vector} from "./geometry/Vector.js";
 import {CourseRenderer} from "./game/CourseRenderer.js";
 import {Course} from "./game/Course.js";
 import {Line} from "./geometry/Line.js";
-import {GamepadInput} from "./input/GamepadInput.js";
+import {waitForGamepads} from "./input/GamepadInput.js";
+import {KeyboardInput} from "./input/KeyboardInput.js";
 
 const NUM_RACERS = 2;
+const NUM_GAMEPADS = 0;
 const RACER_COLORS = ["red", "blue", "green"];
 
 class Main {
@@ -36,10 +38,13 @@ class Main {
     let courseRenderer = new CourseRenderer(canvas, course, racers);
     courseRenderer.render();
 
-    new GamepadInput(NUM_RACERS, gamepadInput => {
+    waitForGamepads(NUM_GAMEPADS, controllers => {
+      for (let i = 0; i < NUM_RACERS - NUM_GAMEPADS; ++i) {
+        controllers.push(new KeyboardInput(i));
+      }
       let id = window.setInterval(() => {
         for (let i = 0; i < NUM_RACERS; ++i) {
-          let direction = gamepadInput.direction(i);
+          let direction = controllers[i].direction();
           if (!direction) {
             window.clearInterval(id);
           }
