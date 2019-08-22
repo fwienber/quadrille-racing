@@ -69,7 +69,7 @@ export class CourseRenderer {
 
       this.context.fillStyle = racer.color;
       for (let position of racer.track) {
-        this.renderFilledCircle(position, SCALE / 6);
+        this.renderFilledCircle(position, SCALE / 8);
       }
       if (racer.crashed) {
         this.context.fillStyle = "grey";
