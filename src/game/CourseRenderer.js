@@ -1,4 +1,5 @@
 const SCALE = 25;
+const TRACK_LENGTH = -15;
 
 export class CourseRenderer {
 
@@ -62,13 +63,14 @@ export class CourseRenderer {
 
     // render racers
     for (let racer of this.racers) {
+      let track = racer.track.slice(TRACK_LENGTH);
       this.context.beginPath();
       this.context.strokeStyle = racer.color;
-      this.renderPolyline(racer.track);
+      this.renderPolyline(track);
       this.context.stroke();
 
       this.context.fillStyle = racer.color;
-      for (let position of racer.track) {
+      for (let position of track) {
         this.renderFilledCircle(position, SCALE / 6);
       }
       if (racer.crashed) {
