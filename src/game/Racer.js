@@ -16,6 +16,7 @@ export class Racer {
     this.track = [startPosition]; // of positions
     this.momentum = momentum;
     this.state = "racing";
+    this.roundsFinished = 0;
   }
 
   get position() {
@@ -39,14 +40,18 @@ export class Racer {
     return new Line(currentPosition, nextPosition);
   }
 
-  crash() {
+  crossBoundary() {
     this.momentum = Direction.ZERO;
     this.state = "crashed";
   }
 
+  crossFinishLine() {
+    this.roundsFinished++;
+  }
+
   get crashed() {
     return this.state === "crashed";
-  } 
+  }
 
   finish() {
     this.momentum = Direction.ZERO;

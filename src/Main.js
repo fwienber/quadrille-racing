@@ -82,10 +82,16 @@ class Main {
         }
         let lastLine = racer.move(direction);
         if (this.course.intersect(lastLine)) {
-          racer.crash();
+          racer.crossBoundary();
         }
-        if (this.course.intersectsFinishLine(lastLine)) {
-          racer.finish();
+        if (this.course.intersectsFinishLine(lastLine) && !racer._crossedFinishLine) {
+          racer._crossedFinishLine = true;
+          racer.crossFinishLine();
+          if (racer.roundsFinished>=this.gameSettings.numRoundsToWin) {
+            racer.finish();
+          }
+        } else {
+          racer._crossedFinishLine = false;
         }
         this.courseRenderer.render();
       }
