@@ -30,8 +30,8 @@ class Main {
     }
 
     let canvas = document.createElement("canvas");
-    canvas.width = 700;
-    canvas.height = 600;
+    canvas.width = 701;
+    canvas.height = 601;
     document.body.appendChild(canvas);
 
     let course = new Course(startLine, innerBorder, outerBorder, finishLine);
@@ -53,7 +53,7 @@ class Main {
           console.log(i + "=> " + racers[i].position);
           courseRenderer.render();
         }
-      }, 1000);
+      }, 3000);
     });
   }
 

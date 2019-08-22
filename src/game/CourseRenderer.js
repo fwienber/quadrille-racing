@@ -1,4 +1,4 @@
-const SCALE = 10;
+const SCALE = 25;
 
 export class CourseRenderer {
 
@@ -10,14 +10,42 @@ export class CourseRenderer {
   }
 
   render() {
-    this.context.lineWidth = 1;
     this.context.lineCap = "butt";
     this.context.fillStyle = "white";
 
     // clear
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    let width = this.canvas.width;
+    let height = this.canvas.height;
+    this.context.fillRect(0, 0, width, height);
+
+    // quadrille paper
+    this.context.lineWidth = 0.1;
+    this.context.strokeStyle = "#DFAB91";
+    this.context.beginPath();
+    for (let x = 0; x < width; x += SCALE / 5) {
+      this.context.moveTo(x, 0);
+      this.context.lineTo(x, height);
+    }
+    for (let y = 0; y < width; y += SCALE / 5) {
+      this.context.moveTo(0, y);
+      this.context.lineTo(width, y);
+    }
+    this.context.stroke();
+
+    this.context.lineWidth = 0.4;
+    this.context.beginPath();
+    for (let x = 0; x < width; x += SCALE) {
+      this.context.moveTo(x, 0);
+      this.context.lineTo(x, height);
+    }
+    for (let y = 0; y < width; y += SCALE) {
+      this.context.moveTo(0, y);
+      this.context.lineTo(width, y);
+    }
+    this.context.stroke();
 
     // render course
+    this.context.lineWidth = 1;
     this.context.strokeStyle = "black";
     this.context.setLineDash([2,2]);
     this.context.beginPath();
@@ -32,16 +60,29 @@ export class CourseRenderer {
     this.renderPolyLine(this.course.innerBorder);
     this.context.stroke();
 
+    // render racers
     for (let racer of this.racers) {
       this.context.beginPath();
       this.context.strokeStyle = racer.color;
       this.renderPolyLine(racer.track);
       this.context.stroke();
-      this.context.beginPath();
+
       this.context.fillStyle = racer.color;
-      this.context.arc(SCALE * racer.position.x, SCALE * racer.position.y, SCALE/4, 0, 2 * Math.PI);
-      this.context.fill();
+      for (let position of racer.track) {
+        this.renderFilledCircle(position, SCALE / 6);
+      }
+      this.renderFilledCircle(racer.position, SCALE / 4);
+
+      for (let candidate of racer.nextPositionCandidates) {
+        this.renderFilledCircle(candidate, SCALE / 25);
+      }
     }
+  }
+
+  renderFilledCircle(position, radius) {
+    this.context.beginPath();
+    this.context.arc(SCALE * position.x, SCALE * position.y, radius, 0, 2 * Math.PI);
+    this.context.fill();
   }
 
   renderLine(line) {
