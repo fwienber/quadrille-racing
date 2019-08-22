@@ -1,5 +1,5 @@
 import {Vector} from "../geometry/Vector.js";
-import {Momentum} from "../geometry/Momentum";
+import {Momentum} from "../geometry/Momentum.js";
 
 const NEIGHBORS = [];
 for (let y = -1; y <=1; ++y) {
@@ -7,9 +7,10 @@ for (let y = -1; y <=1; ++y) {
     NEIGHBORS.push(new Vector(x, y));
   }
 }
+const NULL_VECTOR = new Vector(0, 0);
 
 export class Racer {
-  constructor(color, startPosition, momentum = new Momentum(0,0)) {
+  constructor(color, startPosition, momentum = NULL_VECTOR) {
     this.color = color;
     this.track = [startPosition]; // of positions
     this.momentum = momentum;
@@ -28,10 +29,14 @@ export class Racer {
     return NEIGHBORS.map(neighbor => nextCenterPosition.add(neighbor));
   }
 
-  move(acceleration) {
+  move(acceleration = NULL_VECTOR) {
     this.momentum = this.momentum.add(acceleration);
-    let nextPosition = this.position.propagate(this.momentum);
+    let nextPosition = this.position.add(this.momentum);
     this.track.push(nextPosition);
     return nextPosition;
+  }
+
+  toString() {
+    return "Racer(" + this.color + ", pos=" + this.position + ", momentum=" + this.momentum + ")";
   }
 }
