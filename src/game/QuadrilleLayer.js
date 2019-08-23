@@ -9,6 +9,9 @@ export class QuadrilleLayer extends Layer {
   render() {
     this.clear();
 
+    this.context.fillStyle = "white";
+    this.context.fillRect(0, 0, this.width, this.height);
+
     this.context.strokeStyle = "#DFAB91";
 
     this.context.lineWidth = 0.1;

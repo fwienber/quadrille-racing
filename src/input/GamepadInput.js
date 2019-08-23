@@ -6,21 +6,23 @@ const CROSS_LEFT = 14;
 const CROSS_RIGHT = 15;
 const AXES_LIMIT = 0.5;
 
-export function waitForGamepads(number, callback) {
+export function waitForGamepads(callback) {
   let gamepads = [];
 
-  if (!number) {
-    callback(gamepads);
-  }
-
-  window.addEventListener("gamepadconnected", e => {
+  let timeoutId;
+  function gamepadConnectedListener(e) {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+    timeoutId = window.setTimeout(() => {
+      window.removeEventListener("gamepadconnected", gamepadConnectedListener);
+      callback(gamepads);
+    }, 500);
     if (e.gamepad.mapping === "standard") {
       gamepads.push(new GamepadInput(e.gamepad.index));
-      if (gamepads.length === number) {
-        callback(gamepads);
-      }
     }
-  });
+  }
+  window.addEventListener("gamepadconnected", gamepadConnectedListener);
 }
 
 class GamepadInput {
