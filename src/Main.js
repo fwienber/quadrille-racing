@@ -41,14 +41,7 @@ class Main {
 
   startGame(course) {
     this.course = course;
-    let start = course.startLine.start;
-    this.racers = [];
-    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
-      // noinspection JSSuspiciousNameCombination
-      let racer = new Racer(this.gameSettings.racerColors[i], new Vector(Math.round(start.x + 0.5), Math.round(start.y + 1.5) + i));
-      racer.move(new Vector(1,0));
-      this.racers.push(racer);
-    }
+    this.racers = this.initializeRacers(course, this.gameSettings.numRacers);
 
     let canvas = document.createElement("canvas");
     canvas.width = 1280;
@@ -65,6 +58,21 @@ class Main {
       this.controllers = controllers;
       window.requestAnimationFrame(this.gameLoop);
     });
+  }
+
+  initializeRacers(course, numRacers) {
+    let start = course.startLine.start;
+    let end = course.startLine.start;
+    let isVertical = (Math.abs(start.x - end.x) < Math.abs(start.y - end.y));
+    let racers = [];
+    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
+      // noinspection JSSuspiciousNameCombination
+      let racer = new Racer(this.gameSettings.racerColors[i], new Vector(Math.round(start.x + 0.5), Math.round(start.y + 1.5) + i));
+      racer.move(new Vector(1,0));
+      racers.push(racer);
+    }
+
+    return racers
   }
 
   gameLoop(timestamp) {
