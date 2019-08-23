@@ -34,6 +34,9 @@ export class Racer {
 
   move(acceleration = NULL_VECTOR) {
     this.momentum = this.momentum.add(acceleration);
+    if (this.momentum.x !== 0 || this.momentum.y !== 0) {
+      this.state = "racing";
+    }
     let currentPosition = this.position;
     let nextPosition = currentPosition.add(this.momentum);
     this.track.push(nextPosition);
