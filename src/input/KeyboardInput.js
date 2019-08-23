@@ -26,14 +26,17 @@ const KEY_MAPPINGS = [
 export class KeyboardInput {
   constructor(layout) {
     this.keymap = KEY_MAPPINGS[layout];
-    window.addEventListener("keypress", e => {
+    window.addEventListener("keydown", e => {
       this.lastKey = e.key;
+    });
+    window.addEventListener("keyup", e => {
+      if (this.lastKey === e.key) {
+        this.lastKey = undefined;
+      }
     });
   }
 
   direction(index) {
-    let lastKey = this.lastKey;
-    this.lastKey = undefined;
-    return this.keymap[lastKey] || Direction.ZERO;
+    return this.keymap[this.lastKey] || Direction.ZERO;
   }
 }

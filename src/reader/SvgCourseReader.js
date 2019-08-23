@@ -2,7 +2,7 @@ import {Vector} from "../geometry/Vector.js";
 import {Polyline} from "../geometry/Polyline.js";
 import {Course} from "../game/Course.js";
 import {Line} from "../geometry/Line.js";
-import {QUADRILLE_SIZE_PX} from "../game/CourseRenderer.js";
+import {QUADRILLE_SIZE_PX} from "../draw/Layer.js";
 
 let svgPathToPolyline = (path, scaleX, scaleY) => {
   let line = [];
@@ -23,9 +23,9 @@ let svgPathToPolyline = (path, scaleX, scaleY) => {
 
 let isLowerCase = (char) => {
   return char.toLowerCase() === char;
-}
+};
 
-export function readCourseFromSvg(url, callback) {
+export function readCourseFromSvg(paperWidth, paperHeight, url, callback) {
   fetch(url)
           .then(response => response.text())
           .then(str => {
@@ -35,8 +35,8 @@ export function readCourseFromSvg(url, callback) {
             let svg = svgContainer.getElementsByTagName("svg").item(0);
             let width = svg.viewBox.baseVal.width || svg.width.baseVal.value;
             let height = svg.viewBox.baseVal.height || svg.height.baseVal.value;
-            let scaleX = 1280 / QUADRILLE_SIZE_PX / width;
-            let scaleY = 720 / QUADRILLE_SIZE_PX / height;
+            let scaleX = paperWidth / width / QUADRILLE_SIZE_PX;
+            let scaleY = paperHeight / height / QUADRILLE_SIZE_PX;
 
             let paths = svgContainer.getElementsByTagName("path");
 

@@ -1,13 +1,16 @@
 import {GAME_SETTINGS} from "./GameSettings.js";
 import {Racer} from "./game/Racer.js";
 import {Vector} from "./geometry/Vector.js";
-import {CourseRenderer} from "./game/CourseRenderer.js";
 import {Course} from "./game/Course.js";
 import {Line} from "./geometry/Line.js";
 import {waitForGamepads} from "./input/GamepadInput.js";
 import {KeyboardInput} from "./input/KeyboardInput.js";
 import {Polyline} from "./geometry/Polyline.js";
 import {readCourseFromSvg} from "./reader/SvgCourseReader.js";
+import {createPaper} from "./game/Paper.js";
+
+const WIDTH = 1280;
+const HEIGHT = 720;
 
 //const NUM_RACERS = 2;
 //const NUM_GAMEPADS = 1;
@@ -23,7 +26,7 @@ class Main {
   }
 
   newGame() {
-    readCourseFromSvg(this.gameSettings.courseLayout, this.startGame);
+    readCourseFromSvg(WIDTH, HEIGHT, this.gameSettings.courseLayout, this.startGame);
     // this.startGame(Main.createSimpleCourse());
   }
 
@@ -50,13 +53,9 @@ class Main {
       this.racers.push(racer);
     }
 
-    let canvas = document.createElement("canvas");
-    canvas.width = 1280;
-    canvas.height = 720;
-    document.body.appendChild(canvas);
-
-    this.courseRenderer = new CourseRenderer(canvas, this.course, this.racers);
-    this.courseRenderer.render();
+    this.paper = createPaper(WIDTH, HEIGHT, this.gameSettings, this.course, this.racers);
+    this.paper.quadrilleLayer.render();
+    this.paper.courseLayer.render();
 
     waitForGamepads(this.gameSettings.numGamePads, controllers => {
       for (let i = 0; i < this.gameSettings.numRacers - this.gameSettings.numGamePads; ++i) {
@@ -73,13 +72,7 @@ class Main {
     }
     let timeDelta = timestamp - this.start;
     if (timeDelta < this.gameSettings.timeout) {
-      let context = this.courseRenderer.context;
-      context.fillStyle = "blue";
-      context.beginPath();
-      context.moveTo(500,400);
-      context.arc(500, 400, 50, 0, 2 * Math.PI * (timeDelta / 500));
-      context.lineTo(500,400);
-      context.fill();
+      this.paper.feedbackLayer.render(timeDelta, this.controllers);
     } else {
       this.start = timestamp;
       for (let i = 0; i < this.gameSettings.numRacers; ++i) {
@@ -89,10 +82,6 @@ class Main {
         }
 
         let direction = this.controllers[i].direction();
-        if (!direction) {
-          window.clearInterval(this.id);
-          return;
-        }
         let lastLine = racer.move(direction);
         if (this.course.intersect(lastLine)) {
           if (DEBUG) {
@@ -116,7 +105,7 @@ class Main {
         } else {
           racer._crossedFinishLine = false;
         }
-        this.courseRenderer.render();
+        this.paper.racersLayer.render();
       }
     }
     window.requestAnimationFrame(this.gameLoop);
