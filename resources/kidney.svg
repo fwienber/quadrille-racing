@@ -1,0 +1,26 @@
+<svg xmlns:se="http://svg-edit.googlecode.com" xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns="http://www.w3.org/2000/svg" width="777"
+     height="480" style="">
+  <title>my vector image</title>                                    <!-- Created with Vector Paint - http://www.vectorpaint.yaks.com/ https://chrome.google.com/webstore/detail/hnbpdiengicdefcjecjbnjnoifekhgdo -->
+  <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none"/>
+  <g class="currentLayer" style="">
+    <title>Layer 1</title>
+    <path fill="#4a90d6" fill-opacity="1" stroke="#222222" stroke-opacity="1" stroke-width="2" stroke-dasharray="none"
+          stroke-linejoin="round" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1"
+          marker-start="" marker-mid="" marker-end="" id="svg_1"
+          d="M19.77141,281.28572L32.14286,89.28571L150.71429,15.71429L415.71429,12.14286L621.42857,22.85714L725,97.14286L753.57143,190L747.14286,302.14286L723.57143,407.85714L663.57143,451.42857L549.28571,450C549.77142,450.57143 479.77142,391.28572 479.77142,391.28572C479.77142,391.28572 452.62856,279.85714 452.62856,279.85714C452.62856,279.85714 398.34285,246.28572 398.34285,246.28572C398.34285,246.28572 335.4857,277 335.4857,277C335.4857,277 331.91427,353.42857 331.42857,352.85714C331.91427,353.42857 364.05713,386.28572 363.57143,385.71429C364.05713,386.28572 343.34284,455.57143 342.85714,455C343.34284,455.57143 251.19999,468.42858 250.71429,467.85714C251.19999,468.42858 136.19998,443.42858 135.71429,442.85714C136.19998,443.42858 39.05712,380.57143 38.57143,380L19.77141,281.28572z"
+          style="color: rgb(0, 0, 0);" class="selected"/>
+    <path fill="#ffffff" fill-opacity="1" stroke="#222222" stroke-opacity="1" stroke-width="2" stroke-dasharray="none"
+          stroke-linejoin="round" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1"
+          marker-start="" marker-mid="" marker-end="" id="svg_3"
+          d="M145.91427,154.71429L213.05713,104L340.91428,101.85714C340.91428,101.85714 473.05714,104 473.05714,104C473.05714,104 546.62857,116.85714 546.62857,116.85714C546.62857,116.85714 591.62857,138.28571 591.62857,138.28571C591.62857,138.28571 638.77143,180.42857 638.77143,180.42857C638.77143,180.42857 655.91428,247.57143 655.91428,247.57143C655.91428,247.57143 647.34285,300.42857 647.34285,300.42857C647.34285,300.42857 634.48571,349 634.48571,349C634.48571,349 594.48571,350.42857 594.48571,350.42857C594.48571,350.42857 575.2,316.14286 575.2,316.14286C575.2,316.14286 563.05714,261.14286 563.05714,261.14286C563.05714,261.14286 550.91428,208.28571 550.71429,207.85714C550.91428,208.28571 513.77142,175.42857 513.77142,175.42857C513.77142,175.42857 442.34285,156.85714 442.34285,156.85714C442.34285,156.85714 355.91428,162.57143 355.91428,162.57143C355.91428,162.57143 285.19999,187.57143 285.19999,187.57143C285.19999,187.57143 250.19999,220.42857 250.19999,220.42857C250.19999,220.42857 235.91428,274.71429 235.91428,274.71429L240.19999,311.14286C240.19999,311.85714 209.4857,349 209.4857,349C209.4857,349 142.34285,320.42857 142.34285,320.42857C142.34285,320.42857 124.4857,237.57143 124.4857,237.57143L145.91427,154.71429z"
+          style="color: rgb(0, 0, 0);" class=""/>
+
+    <path fill="#4a90d6" fill-opacity="1" stroke="#222222" stroke-opacity="1" stroke-width="2" stroke-dasharray="none"
+          stroke-linejoin="round" stroke-linecap="butt" stroke-dashoffset="" fill-rule="nonzero" opacity="1"
+          marker-start="" marker-mid="" marker-end=""
+          d="M325.9857233249412,5.8571516761975895L325.9857233249412,110.14286773788704" id="svg_2"/>
+  </g>
+</svg>

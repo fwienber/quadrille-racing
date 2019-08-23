@@ -9,9 +9,9 @@ let svgPathToPolyline = (path, scale) => {
   let cursor = null;
   for (let i = 0; i < path.pathSegList.length; ++i) {
     let svgPoint = path.pathSegList.getItem(i);
-    if (svgPoint.pathSegTypeAsLetter === "M" || svgPoint.pathSegTypeAsLetter === "l" || svgPoint.pathSegTypeAsLetter === "c") {
+    if (svgPoint.pathSegTypeAsLetter === "M" || svgPoint.pathSegTypeAsLetter.toLowerCase() === "l" || svgPoint.pathSegTypeAsLetter.toLowerCase() === "c") {
       let coursePoint = new Vector(svgPoint.x * scale, svgPoint.y * scale);
-      if (svgPoint.pathSegTypeAsLetter !== "M") {
+      if (isLowerCase(svgPoint.pathSegTypeAsLetter)) {
         coursePoint = cursor.add(coursePoint);
       }
       cursor = coursePoint;
@@ -20,6 +20,10 @@ let svgPathToPolyline = (path, scale) => {
   }
   return line;
 };
+
+let isLowerCase = (char) => {
+  return char.toLowerCase() === char;
+}
 
 export function readCourseFromSvg(url, callback) {
   fetch(url)
