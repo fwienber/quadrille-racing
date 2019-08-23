@@ -7,8 +7,8 @@ export const GAME_SETTINGS = {
   courseLayout: "resources/islands.svg",
   numRacers : 2,
   numGamePads:  0,
-  racerColors : ["red", "blue", "green"],
+  racerColors : ["red", "blue", "green", "yellow", "pink"],
   numRoundsToWin : 3,
   timeout : 1000,
-  timewarp: 0.9
+  timewarp: 0.8
 };
