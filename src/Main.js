@@ -23,7 +23,7 @@ class Main {
   }
 
   newGame() {
-    readCourseFromSvg("resources/course1.svg", this.startGame);
+    readCourseFromSvg(this.gameSettings.courseLayout, this.startGame);
     // this.startGame(Main.createSimpleCourse());
   }
 
