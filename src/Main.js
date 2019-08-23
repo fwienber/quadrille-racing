@@ -12,6 +12,7 @@ import {readCourseFromSvg} from "./reader/SvgCourseReader.js";
 //const NUM_RACERS = 2;
 //const NUM_GAMEPADS = 1;
 //const RACER_COLORS = ["red", "blue", "green"];
+const DEBUG=true;
 
 class Main {
 
@@ -92,13 +93,23 @@ class Main {
         }
         let lastLine = racer.move(direction);
         if (this.course.intersect(lastLine)) {
+          if (DEBUG) {
+            console.debug("Racer ", racer, " crashed into boundary.");
+          }
           racer.crossBoundary();
         }
         if (this.course.intersectsFinishLine(lastLine) && !racer._crossedFinishLine) {
+          if (DEBUG) {
+            console.debug("Racer ", racer, " crossed finishing line.");
+          }
           racer._crossedFinishLine = true;
           racer.crossFinishLine();
           if (racer.roundsFinished>=this.gameSettings.numRoundsToWin) {
             racer.finish();
+          }
+          this.gameSettings.timeout = Math.round(this.gameSettings.timeout * this.gameSettings.timewarp);
+          if (DEBUG) {
+            console.debug("Let's do the timewarp again: timeout=", this.gameSettings.timeout, " ms");
           }
         } else {
           racer._crossedFinishLine = false;
