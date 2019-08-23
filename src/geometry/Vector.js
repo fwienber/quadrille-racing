@@ -15,6 +15,14 @@ export class Vector {
     return new Vector(this.x + anotherVector.x, this.y + anotherVector.y)
   };
 
+  multiply(scalar) {
+    return new Vector(this.x * scalar, this.y * scalar);
+  }
+
+  round() {
+    return new Vector(Math.round(this.x), Math.round(this.y));
+  }
+
   invert() {
     return new Vector( - this.x, - this.y );
   }
