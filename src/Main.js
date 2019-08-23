@@ -50,6 +50,7 @@ class Main {
     this.paper = createPaper(WIDTH, HEIGHT, this.gameSettings, this.course, this.racers);
     this.paper.quadrilleLayer.render();
     this.paper.courseLayer.render();
+    this.paper.racersLayer.render();
 
     waitForGamepads(this.gameSettings.numGamePads, controllers => {
       for (let i = 0; i < this.gameSettings.numRacers - this.gameSettings.numGamePads; ++i) {
