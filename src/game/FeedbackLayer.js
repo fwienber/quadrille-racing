@@ -14,7 +14,7 @@ export class FeedbackLayer extends Layer {
     this.context.fillStyle = "blue";
     this.context.beginPath();
     this.context.moveTo(500, 400);
-    this.context.arc(500, 400, 50, 0, 2 * Math.PI * (timeDelta / 500));
+    this.context.arc(500, 400, 50, 0, 2 * Math.PI * (timeDelta / this.gameSettings.timeout));
     this.context.lineTo(500, 400);
     this.context.fill();
 
