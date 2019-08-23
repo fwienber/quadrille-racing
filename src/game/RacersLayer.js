@@ -42,9 +42,10 @@ export class RacersLayer extends Layer {
       } else if (racer.crashed) {
         text += " crashed";
       }
-      this.context.fillText(text, 50, this.height - 30 * (i + 1));
+      this.context.fillText(text, 50, this.height - 30 * (this.racers.length - i));
     }
     this.context.font = "14px comic-sans";
+    this.context.fillStyle = "black";
     this.context.fillText("rounds to go", 50, this.height - 30 * (this.racers.length + 1));
   }
 }
