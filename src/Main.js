@@ -140,10 +140,11 @@ class Main {
   }
 
   recalculateTimeout() {
-    let timeDelta = this.gameSettings.startTimeout -this.gameSettings.finalTimeout
+    let timeDelta = this.gameSettings.startTimeout -this.gameSettings.finalTimeout;
+    let roundsToWin = this.gameSettings.numRoundsToWin;
     let roundsFinished = this.racers.map(racer => racer.roundsFinished);
     let maxRounds = Math.max(... roundsFinished);
-    let newTimeout = Math.round(this.gameSettings.startTimeout - maxRounds * timeDelta/this.racers.length);
+    let newTimeout = Math.round(this.gameSettings.startTimeout - maxRounds * timeDelta/roundsToWin);
 
     this.gameSettings.timeout = newTimeout;
   }
