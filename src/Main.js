@@ -59,6 +59,8 @@ class Main {
       this.controllers = controllers;
       window.requestAnimationFrame(this.gameLoop);
     });
+
+    this.gameSettings.timeout = this.gameSettings.startTimeout;
   }
 
   initializeRacers(course, numRacers) {
@@ -124,7 +126,7 @@ class Main {
           if (racer.roundsFinished>=this.gameSettings.numRoundsToWin) {
             racer.finish();
           }
-          this.gameSettings.timeout = Math.round(this.gameSettings.timeout * this.gameSettings.timewarp);
+          this.recalculateTimeout();
           if (DEBUG) {
             console.debug("Let's do the timewarp again: timeout=", this.gameSettings.timeout, " ms");
           }
@@ -137,6 +139,14 @@ class Main {
     window.requestAnimationFrame(this.gameLoop);
   }
 
+  recalculateTimeout() {
+    let timeDelta = this.gameSettings.startTimeout -this.gameSettings.finalTimeout
+    let roundsFinished = this.racers.map(racer => racer.roundsFinished);
+    let maxRounds = Math.max(... roundsFinished);
+    let newTimeout = Math.round(this.gameSettings.startTimeout - maxRounds * timeDelta/this.racers.length);
+
+    this.gameSettings.timeout = newTimeout;
+  }
 }
 
 window.main = new Main();

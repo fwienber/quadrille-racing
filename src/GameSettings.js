@@ -9,6 +9,7 @@ export const GAME_SETTINGS = {
   numGamePads:  0,
   racerColors : ["red", "blue", "green", "yellow", "pink"],
   numRoundsToWin : 3,
-  timeout : 1000,
-  timewarp: 0.8
+
+  startTimeout: 3000,
+  finalTimeout: 1000
 };
