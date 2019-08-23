@@ -11,12 +11,23 @@ export class FeedbackLayer extends Layer {
   render(timeDelta, controllers) {
     this.clear();
 
-    this.context.fillStyle = "blue";
+    // render timeout circle:
+    let middleX = this.width / 2;
+    let middleY = this.height / 2;
+
+    this.context.fillStyle = "rgba(140,140,180,.6)";
     this.context.beginPath();
-    this.context.moveTo(500, 400);
-    this.context.arc(500, 400, 50, 0, 2 * Math.PI * (timeDelta / this.gameSettings.timeout));
-    this.context.lineTo(500, 400);
+    this.context.moveTo(middleX, middleY);
+    this.context.arc(middleX, middleY, 40, 0, 2 * Math.PI * (timeDelta / this.gameSettings.timeout));
+    this.context.lineTo(middleX, middleY);
     this.context.fill();
+
+    // render timeout seconds:
+    this.context.font = "24px comic-sans";
+    this.context.textAlign = "center";
+    this.context.textBaseline = "middle";
+    this.context.fillStyle = "black";
+    this.context.fillText(parseFloat(Math.round((this.gameSettings.timeout - timeDelta)/1000 * 10) / 10).toFixed(1) + " s", middleX, middleY);
 
     // render next target points
     for (let i = 0; i < this.gameSettings.numRacers; ++i) {
