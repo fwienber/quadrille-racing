@@ -4,15 +4,17 @@ const TRACK_LENGTH = -15;
 
 export class RacersLayer extends Layer {
 
-  constructor(width, height, racers) {
+  constructor(width, height, gameSettings, racers) {
     super(width, height);
     this.racers = racers;
+    this.gameSettings = gameSettings;
   }
 
   render() {
     this.clear();
 
-    for (let racer of this.racers) {
+    for (let i = 0; i < this.racers.length; ++i) {
+      let racer = this.racers[i];
       let track = racer.track.slice(TRACK_LENGTH);
       this.context.beginPath();
       this.context.strokeStyle = racer.color;
@@ -29,6 +31,20 @@ export class RacersLayer extends Layer {
         this.context.fillStyle = "white";
       }
       this.renderFilledCircle(racer.position, QUADRILLE_SIZE_PX / 4);
+
+      this.context.font = "24px comic-sans";
+      this.context.textAlign = "left";
+      this.context.textBaseline = "alphabetic";
+      this.context.fillStyle = racer.color;
+      let text = this.gameSettings.numRoundsToWin - racer.roundsFinished;
+      if (racer.finished) {
+        text = "finished!";
+      } else if (racer.crashed) {
+        text += " crashed";
+      }
+      this.context.fillText(text, 50, this.height - 30 * (i + 1));
     }
+    this.context.font = "14px comic-sans";
+    this.context.fillText("rounds to go", 50, this.height - 30 * (this.racers.length + 1));
   }
 }

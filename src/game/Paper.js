@@ -9,7 +9,7 @@ export function createPaper(width, height, gameSettings, course, racers) {
     height: height,
     quadrilleLayer: new QuadrilleLayer(width, height),
     courseLayer: new CourseLayer(width, height, course),
-    racersLayer: new RacersLayer(width, height, racers),
+    racersLayer: new RacersLayer(width, height, gameSettings, racers),
     feedbackLayer: new FeedbackLayer(width, height, gameSettings, racers)
   }
 }
