@@ -15,6 +15,10 @@ export class Vector {
     return new Vector(this.x + anotherVector.x, this.y + anotherVector.y)
   };
 
+  substract(anotherVector) {
+    return new Vector(this.x - anotherVector.x, this.y - anotherVector.y);
+  }
+
   multiply(scalar) {
     return new Vector(this.x * scalar, this.y * scalar);
   }
