@@ -6,6 +6,7 @@ import {Line} from "./geometry/Line.js";
 import {waitForGamepads} from "./input/GamepadInput.js";
 import {KeyboardInput} from "./input/KeyboardInput.js";
 import {Polyline} from "./geometry/Polyline.js";
+import {Direction} from "./geometry/Momentum.js";
 import {readCourseFromSvg} from "./reader/SvgCourseReader.js";
 import {createPaper} from "./game/Paper.js";
 
@@ -44,14 +45,7 @@ class Main {
 
   startGame(course) {
     this.course = course;
-    let start = course.startLine.start;
-    this.racers = [];
-    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
-      // noinspection JSSuspiciousNameCombination
-      let racer = new Racer(this.gameSettings.racerColors[i], new Vector(Math.round(start.x + 0.5), Math.round(start.y + 1.5) + i));
-      racer.move(new Vector(1,0));
-      this.racers.push(racer);
-    }
+    this.racers = this.initializeRacers(course, this.gameSettings.numRacers);
 
     this.paper = createPaper(WIDTH, HEIGHT, this.gameSettings, this.course, this.racers);
     this.paper.quadrilleLayer.render();
@@ -64,6 +58,37 @@ class Main {
       this.controllers = controllers;
       window.requestAnimationFrame(this.gameLoop);
     });
+  }
+
+  initializeRacers(course, numRacers) {
+    let start = course.startLine.start;
+    let end = course.startLine.end;
+    let isVertical = (Math.abs(start.x - end.x) < Math.abs(start.y - end.y));
+    let momentumVector = Direction.ZERO;
+    let placingVector = Direction.ZERO;
+    if (isVertical) {
+      momentumVector = (end.y > start.y) ? Direction.E : Direction.W;
+      placingVector = (end.y > start.y) ? Direction.S : Direction.N;
+    }
+    else {
+      momentumVector = (end.x > start.x) ? Direction.N : Direction.S;
+      placingVector = (end.x > start.x) ? Direction.E : Direction.W;
+    }
+    let racers = [];
+
+    let startlineVector = end.substract(start);
+    let centerStartlinePosition = start.add(startlineVector.multiply(0.5)).round();
+    let currentRacerPosition = centerStartlinePosition.add(momentumVector).substract(placingVector.multiply(numRacers/2)).round();
+
+    for (let i = 0; i < this.gameSettings.numRacers; ++i) {
+      // noinspection JSSuspiciousNameCombination
+      let racer = new Racer(this.gameSettings.racerColors[i], currentRacerPosition);
+      racer.move(momentumVector);
+      racers.push(racer);
+      currentRacerPosition = currentRacerPosition.add(placingVector);
+    }
+
+    return racers
   }
 
   gameLoop(timestamp) {
