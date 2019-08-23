@@ -1,11 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 1600 1200" version="1.1" xmlns="http://www.w3.org/2000/svg"
-     xml:space="preserve"
-     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-  <path d="M639.734,88.659l-263.781,106.01l-153.256,217.973l-12.003,205.586l109.66,225.463c0,0 293.454,130.112 304.593,141.827c11.139,11.715 285.291,-41.194 288.652,-22.47c3.36,18.725 280.97,55.502 280.97,55.502l235.934,-9.506l113.502,-241.115l-100.539,-286.15l-118.207,-306.795l-241.984,-69.713l-443.541,-16.612Z"
-        style="fill:none;stroke:#000;stroke-width:1px;"/>
-  <path d="M660.764,277.825l419.727,5.761l183.408,114.748c0,0 100.826,280.293 91.992,297.097c-8.834,16.804 -176.686,143.171 -176.686,143.171l-256.484,-25.638l-281.45,1.824l-213.272,-94.871l-31.208,-249.757l263.973,-192.335Z"
-        style="fill:none;stroke:#000;stroke-width:1px;"/>
-  <path d="M642.249,90.274l18.515,187.551" style="fill:none;stroke:#000;stroke-width:1px;stroke-dasharray:1,1;"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1280 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <path d="M477.736,30.99l-254.673,96.854l-140.755,234.864l-60.508,164.405l-10.815,188.768l49.63,120.12l98.4,68.463l93.913,-16.599l72.253,-77.912l56.328,42.421l76.1,90.265l259.246,13.125l258.052,59.802l201.615,-37.753l91.681,-263.728l-37.901,-276.883l-131.178,-274.565l-226.433,-131.118l-394.955,-0.529Z" style="fill:#8b8a8a;stroke:#000;stroke-width:0.8px;"/>
+    <path d="M484.643,217.444l385.491,6.208l168.448,123.64l84.488,320.118l-52.884,169.449l-122.624,22.037l-222.329,-64.846l-258.493,1.966l-158.19,-109.101l-78.717,72.104l-71.246,-14.732l-9.497,-72.611l25.528,-108.319l67.583,-138.674l76.79,-132.242l165.652,-74.997Z" style="fill:#23ff00;stroke:#000;stroke-width:0.83px;"/>
+    <path d="M614.561,30.99l3.289,188.109" style="fill:none;stroke:#000;stroke-width:0.83px;stroke-dasharray:0.83,0.83;"/>
 </svg>

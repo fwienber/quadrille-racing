@@ -10,4 +10,4 @@ export const GAME_SETTINGS = {
   numRoundsToWin : 3,
   timeout : 1000,
   timewarp: 0.9
-}
+};
