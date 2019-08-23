@@ -36,7 +36,7 @@ class Main {
     let finishLine = new Line(finishOuter, finishInner);
     let outerBorder = new Polyline(startOuter, new Vector(7,1), new Vector(10,3), new Vector(12,8), finishOuter);
     let innerBorder = new Polyline(startInner, new Vector(6,5), new Vector(7,7), new Vector(8,10), finishInner);
-    return new Course(startLine, innerBorder, outerBorder, finishLine);
+    return new Course(startLine, outerBorder, [innerBorder], finishLine);
   }
 
   startGame(course) {

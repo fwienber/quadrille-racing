@@ -58,7 +58,9 @@ export class CourseRenderer {
     this.context.setLineDash([]);
     this.context.beginPath();
     this.renderPolyline(this.course.outerBorder.positions);
-    this.renderPolyline(this.course.innerBorder.positions);
+    this.course.islands.forEach(island => {
+      this.renderPolyline(island.positions);
+    });
     this.context.stroke();
 
     // render racers

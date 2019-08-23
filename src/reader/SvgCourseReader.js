@@ -37,11 +37,18 @@ export function readCourseFromSvg(url, callback) {
 
             let paths = svgContainer.getElementsByTagName("path");
 
-            let outerBorder = new Polyline(...svgPathToPolyline(paths.item(0), scale));
-            let innerBorder = new Polyline(...svgPathToPolyline(paths.item(1), scale));
-            let startLine = svgPathToPolyline(paths.item(2), scale);
+            let indexOuterBorder = 0; // the first...
+            let indexStartLine = paths.length -1; // ... the last ... eternity
 
-            let course = new Course(new Line(startLine[0], startLine[1]), innerBorder, outerBorder);
+            let outerBorder = new Polyline(...svgPathToPolyline(paths.item(0), scale));
+            let islands = []; // array of Polylines
+            for (let i = indexOuterBorder+1; i<indexStartLine; i++) {
+              let island = new Polyline(...svgPathToPolyline(paths.item(i), scale));
+              islands.push(island);
+            }
+            let startLine = svgPathToPolyline(paths.item(indexStartLine), scale);
+
+            let course = new Course(new Line(startLine[0], startLine[1]), outerBorder, islands);
 
             callback(course);
           });

@@ -1,7 +1,8 @@
 export const GAME_SETTINGS = {
   availableCourseLayouts: [
     "resources/course1.svg",
-    "resources/kidney.svg"
+    "resources/kidney.svg",
+    "resources/islands.svg"
   ],
   courseLayout: "resources/kidney.svg",
   numRacers : 2,
@@ -9,5 +10,5 @@ export const GAME_SETTINGS = {
   racerColors : ["red", "blue", "green"],
   numRoundsToWin : 3,
   timeout : 1000,
-  timewarp: 0.9
+  timewarp: 0.8
 }
